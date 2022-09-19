@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(cors())
 
 //product schema
-const productSchema = mongoose.Schema({
+const sneackersSchema = mongoose.Schema({
   name:{
     type:String,
     required:[true, "please provide product name"],
@@ -64,9 +64,32 @@ const productSchema = mongoose.Schema({
 })
 
 
+//schema model
+const Sneackers = mongoose.model('Sneackers', sneackersSchema)
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
+})
+
+app.post('/api/v1/Sneackers', async(req, res, next) =>{
+
+ try{
+   //save // create
+   const sneackers = new Sneackers(req.body);
+   const result = await sneackers.save();
+ 
+   res.status(200).json({
+     message:'data insert successfully',
+     data : result
+   });
+ }catch(err){
+  res.status(400).json({
+    status:'fail',
+    message:'data not inserted',
+    error:err.message
+  })
+ }
 })
 
 module.exports = app;
