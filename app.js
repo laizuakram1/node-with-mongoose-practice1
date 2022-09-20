@@ -92,4 +92,26 @@ app.post('/api/v1/Sneackers', async(req, res, next) =>{
  }
 })
 
+// get sneackers by id
+
+app.get('/api/v1/sneackers', async(req, res, next) =>{
+    try{
+      // i can dind by use multi operator and method
+      const sneacker = await Sneackers.find({price: {$gte:2000}})
+
+      res.status(200).json({
+        status:200,
+        message:'success',
+        data: sneacker
+      })
+
+    }catch(err){
+      res.status(400).json({
+        status:'fail',
+        message:'data cant get',
+        error: err.message
+      })
+    }
+})
+
 module.exports = app;
