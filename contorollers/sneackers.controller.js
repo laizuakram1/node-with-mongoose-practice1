@@ -1,65 +1,90 @@
-const { getSneackersService, saveSneackersService, updateSneackerService } = require("../services/sneackers.service");
+const { getSneackersService,
+  saveSneackersService,
+  updateSneackerService,
+  bulkUpdateSneackersService
+ } = require("../services/sneackers.service");
 
 
 
-exports.getSneackers = async(req, res, next) =>{
-    try{
-      // i can dind by use multi operator and method
-      const sneacker = await getSneackersService();
+exports.getSneackers = async (req, res, next) => {
+  try {
+    // i can dind by use multi operator and method
+    const sneacker = await getSneackersService();
 
-      res.status(200).json({
-        status:200,
-        message:'success',
-        data: sneacker
-      })
+    res.status(200).json({
+      status: 200,
+      message: 'success',
+      data: sneacker
+    })
 
-    }catch(err){
-      res.status(400).json({
-        status:'fail',
-        message:'data cant get',
-        error: err.message
-      })
-    }
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'data cant get',
+      error: err.message
+    })
+  }
 };
 
 
-exports.saveSneackers = async(req, res, next) =>{
+exports.saveSneackers = async (req, res, next) => {
 
-    try{
-      //save // create
-      const sneackers = req.body;
-      const result = await saveSneackersService(sneackers);
-    
-      res.status(200).json({
-        message:'data insert successfully',
-        data : result
-      });
-    }catch(err){
-     res.status(400).json({
-       status:'fail',
-       message:'data not inserted',
-       error:err.message
-     })
-    }
-   }
+  try {
+    //save // create
+    const sneackers = req.body;
+    const result = await saveSneackersService(sneackers);
 
-   exports.updateSneacker = async(req, res, next) =>{
-    try {
-      const id = req.params.id;
-      const result = await updateSneackerService(id, req.body);
+    res.status(200).json({
+      message: 'data insert successfully',
+      data: result
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'data not inserted',
+      error: err.message
+    })
+  }
+}
 
-      res.status(200).json({
-        status:'success',
-        message:"sneacker update successful",
-        data: result
+exports.updateSneacker = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const result = await updateSneackerService(id, req.body);
 
-      }) 
-    } catch (err) {
-      res.status(400).json({
-        status:'fail',
-        message:'data not updated',
-        error:err.message
-      })
-    }
-    
-   }
+    res.status(200).json({
+      status: 'success',
+      message: "sneacker update successful",
+      data: result
+
+    })
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'data not updated',
+      error: err.message
+    })
+  }
+
+}
+
+exports.bulkUpdateSneackers = async (req, res, next) => {
+  try {
+    const result = await bulkUpdateSneackersService(req.body);
+
+    res.status(200).json({
+      status: 'success',
+      message: "sneackers bulk update successful",
+      data: result
+
+    })
+
+  } catch (err) {
+    res.status(400).json({
+      status: 'fail',
+      message: 'bulk update not done',
+      error: err.message
+    })
+  }
+
+}
