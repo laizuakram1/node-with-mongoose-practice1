@@ -7,7 +7,13 @@ exports.getSneackersService = async()=>{
 }
 
 exports.saveSneackersService = async(data)=>{
-    const saveSneackers = await Sneackers.save(data);
+    const saveSneackers = await Sneackers.create(data);
 
     return saveSneackers;
+}
+
+exports.updateSneackerService = async(sneackerId, data) =>{
+    const updateSneacker = await Sneackers.updateOne({_id: sneackerId}, {$set: data})
+
+    return updateSneacker;
 }

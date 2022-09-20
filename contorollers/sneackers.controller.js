@@ -1,4 +1,4 @@
-const { getSneackersService, saveSneackersService } = require("../services/sneackers.service");
+const { getSneackersService, saveSneackersService, updateSneackerService } = require("../services/sneackers.service");
 
 
 
@@ -41,4 +41,25 @@ exports.saveSneackers = async(req, res, next) =>{
        error:err.message
      })
     }
+   }
+
+   exports.updateSneacker = async(req, res, next) =>{
+    try {
+      const id = req.params.id;
+      const result = await updateSneackerService(id, req.body);
+
+      res.status(200).json({
+        status:'success',
+        message:"sneacker update successful",
+        data: result
+
+      }) 
+    } catch (err) {
+      res.status(400).json({
+        status:'fail',
+        message:'data not updated',
+        error:err.message
+      })
+    }
+    
    }

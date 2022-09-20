@@ -8,4 +8,10 @@ router.route('/')
 .get(sneackersController.getSneackers)
 .post(sneackersController.saveSneackers)
 
+
+// update single sneacker
+router.route('/:id')
+.patch(sneackersController.updateSneacker)
+
+
 module.exports = router;
